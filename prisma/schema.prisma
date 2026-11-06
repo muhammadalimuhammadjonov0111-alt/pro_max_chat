@@ -1,0 +1,573 @@
+// Gidgogram - Prisma schema
+// Database: SQLite (local dev). Switch provider to "postgresql" for production.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Better Auth core models
+// ---------------------------------------------------------------------------
+
+model User {
+  id              String    @id
+  name            String
+  email           String    @unique
+  emailVerified   Boolean   @default(false)
+  image           String?
+  username        String?   @unique
+  displayUsername String?
+  bio             String?
+  link            String?
+  phone           String?
+  gender          String? // "male" | "female" | "other"
+  birthday        DateTime?
+  location        String?
+  isPrivate       Boolean   @default(false)
+
+  // roles & badges
+  role           String     @default("USER") // "USER" | "ADMIN"
+  isVerified     Boolean    @default(false)
+  // Included ad placements for this user. Extra slots are granted by an admin.
+  adSlots        Int        @default(1)
+  isPremium      Boolean    @default(false)
+  premiumUntil   DateTime?
+  isBanned       Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  // Bot related fields
+  isBot          Boolean    @default(false)
+  botPrompt      String?
+  botDescription String?
+  botCategory    String? // "assistant" | "coder" | "translator" | "writer" | "teacher" | "psychologist" | "legal" | "finance" | "fun" | "general"
+  botPublic      Boolean    @default(true)
+  botOwnerId     String?
+  botOwner       User?      @relation("botOwner", fields: [botOwnerId], references: [id])
+  ownedBots      User[]     @relation("botOwner")
+  botReplies     BotReply[]
+  botReplyAsUser BotReply[] @relation("botReplyUser")
+  updatedAt      DateTime   @updatedAt
+  // Last time the user was active on the site (used for online presence).
+  lastSeenAt     DateTime?
+
+  sessions Session[]
+  accounts Account[]
+
+  posts          Post[]
+  likes          Like[]
+  comments       Comment[]
+  stories        Story[]
+  storyViews     StoryView[]
+  storyComments  StoryComment[]
+  storyReactions StoryReaction[]
+  savedPosts     SavedPost[]
+  postViews      PostView[]
+  subscriptions  Subscription[]
+  payments       Payment[]
+
+  followers    Follow[]        @relation("following")
+  following    Follow[]        @relation("follower")
+  requestsSent FollowRequest[] @relation("reqSent")
+  requestsGot  FollowRequest[] @relation("reqReceived")
+
+  conversations    ConversationMember[]
+  messages         Message[]
+  messageReactions MessageReaction[]
+
+  notifications Notification[] @relation("notificationReceiver")
+  actedOn       Notification[] @relation("notificationActor")
+  reports       Report[]       @relation("reporter")
+
+  ads           Ad[]
+  callsMade     Call[] @relation("CallCaller")
+  callsReceived Call[] @relation("CallCallee")
+
+  @@index([isBot])
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Social models
+// ---------------------------------------------------------------------------
+
+model Post {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  caption    String?
+  location   String?
+  // JSON array of { url: string, type: "image" | "video" }
+  media      String    @default("[]")
+  isReel     Boolean   @default(false)
+  isArchived Boolean   @default(false)
+  editedAt   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  likes    Like[]
+  comments Comment[]
+  savedBy  SavedPost[]
+  views    PostView[]
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model PostView {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
+  @@index([postId])
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan      String // "monthly" | "yearly"
+  amount    Int // so'm
+  status    String   @default("active") // active | expired | cancelled
+  startsAt  DateTime @default(now())
+  endsAt    DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Payment {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan           String // "monthly" | "yearly"
+  amount         Int // so'm
+  method         String // "click" | "payme"
+  // Payment link was generated for a personal plastic card (no official merchant).
+  // We keep the full link, card (last digits) and comment for admin review.
+  providerUrl    String?
+  cardNumber     String?
+  comment        String?
+  // "pending" | "paid" | "rejected"
+  status         String    @default("pending")
+  // Admin confirmation
+  confirmedAt    DateTime?
+  confirmedById  String?
+  rejectReason   String?
+  // Telegram delivery tracking
+  telegramSentAt DateTime?
+  // Foydalanuvchi yuklagan chek/skrinshot (upload /api/upload dan /uploads/... URL)
+  receiptUrl             String?
+  receiptTelegramSentAt  DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model FollowRequest {
+  id          String   @id @default(cuid())
+  requesterId String
+  requester   User     @relation("reqSent", fields: [requesterId], references: [id], onDelete: Cascade)
+  targetId    String
+  target      User     @relation("reqReceived", fields: [targetId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@unique([requesterId, targetId])
+  @@index([targetId])
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  reporterId String
+  reporter   User     @relation("reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  targetType String // "post" | "user" | "comment" | "message" | "conversation"
+  targetId   String
+  // For "message" / "conversation": suhbat ID si — admin faqat shikoyat
+  // qilingan suhbatni ko'radi (boshqalarni emas).
+  targetConversationId String?
+  reason     String
+  status     String   @default("open") // open | resolved | dismissed
+  createdAt  DateTime @default(now())
+
+  @@index([status])
+  @@index([targetConversationId])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([postId])
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+  @@index([followingId])
+}
+
+model Story {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // "media" | "text"
+  kind       String   @default("media")
+  // null for text-only stories
+  mediaUrl   String?
+  mediaType  String   @default("image") // "image" | "video"
+  // text story
+  content    String?
+  background String? // css background (gradient) for text stories
+  // json: MediaOverlay[] — emoji / sticker / gif / text layers
+  overlays   String?
+  musicUrl   String?
+  musicTitle String?
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+
+  views     StoryView[]
+  comments  StoryComment[]
+  reactions StoryReaction[]
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model StoryView {
+  id        String   @id @default(cuid())
+  storyId   String
+  story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  viewerId  String
+  viewer    User     @relation(fields: [viewerId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([storyId, viewerId])
+}
+
+// A reply ("izoh") left on someone's story. Only the story owner — and the
+// author — can read it.
+model StoryComment {
+  id        String   @id @default(cuid())
+  storyId   String
+  story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text      String
+  createdAt DateTime @default(now())
+
+  @@index([storyId])
+}
+
+// One emoji reaction per user per story (upsert toggles it).
+model StoryReaction {
+  id        String   @id @default(cuid())
+  storyId   String
+  story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  emoji     String
+  createdAt DateTime @default(now())
+
+  @@unique([storyId, userId])
+}
+
+model SavedPost {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+}
+
+// ---------------------------------------------------------------------------
+// Direct messages
+// ---------------------------------------------------------------------------
+
+model Conversation {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members  ConversationMember[]
+  messages Message[]
+}
+
+model ConversationMember {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  joinedAt       DateTime     @default(now())
+  lastReadAt     DateTime     @default(now())
+
+  @@unique([conversationId, userId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  text           String?
+  // Any media URL (uploaded file or external GIF). Kept as `imageUrl` for
+  // backward compatibility with existing rows.
+  imageUrl       String?
+  // "image" | "video" | "gif" — how the media should be rendered.
+  mediaType      String?
+  seen           Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+
+  replyToId String?
+  replyTo   Message?          @relation("MessageReplies", fields: [replyToId], references: [id], onDelete: SetNull)
+  replies   Message[]         @relation("MessageReplies")
+  reactions MessageReaction[]
+
+  @@index([conversationId])
+}
+
+// Emoji reactions on chat messages (Instagram-style quick reactions).
+model MessageReaction {
+  id        String   @id @default(cuid())
+  messageId String
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  emoji     String
+  createdAt DateTime @default(now())
+
+  @@unique([messageId, userId, emoji])
+  @@index([messageId])
+}
+
+// ---------------------------------------------------------------------------
+// Notifications
+// ---------------------------------------------------------------------------
+
+model Notification {
+  id         String   @id @default(cuid())
+  receiverId String
+  receiver   User     @relation("notificationReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  actorId    String
+  actor      User     @relation("notificationActor", fields: [actorId], references: [id], onDelete: Cascade)
+  // "like" | "comment" | "follow" | "message" | "announcement"
+  // | "story_comment" | "story_reaction"
+  type       String
+  postId     String?
+  commentId  String?
+  storyId    String?
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([receiverId])
+}
+
+// ---------------------------------------------------------------------------
+// Bot replies (AI assistant logs)
+// ---------------------------------------------------------------------------
+
+model BotReply {
+  id        String   @id @default(cuid())
+  botId     String
+  bot       User     @relation(fields: [botId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation("botReplyUser", fields: [userId], references: [id], onDelete: Cascade)
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+
+  @@index([botId])
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Platform announcements (managed from the admin panel)
+// ---------------------------------------------------------------------------
+
+model Announcement {
+  id          String    @id @default(cuid())
+  title       String
+  body        String
+  level       String    @default("info") // "info" | "warning" | "success"
+  active      Boolean   @default(true)
+  createdById String?
+  createdAt   DateTime  @default(now())
+  expiresAt   DateTime?
+
+  @@index([active])
+}
+
+// ---------------------------------------------------------------------------
+// Advertising
+// ---------------------------------------------------------------------------
+// Users may have several ad requests; every ad must be approved by an admin
+// before it goes live for 30 days. Extending is admin-only.
+model Ad {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String
+  description  String
+  targetUrl    String
+  buttonLabel  String    @default("Batafsil")
+  imageUrl     String?
+  videoUrl     String?
+  audioUrl     String?
+  audioTitle   String?
+  // "PHONE" | "TELEGRAM" (null = no public contact)
+  contactType  String?
+  contactValue String?
+  // "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED"
+  status       String    @default("PENDING")
+  startsAt     DateTime?
+  endsAt       DateTime?
+  adminNote    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([status, endsAt])
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Video / audio calls
+// Signaling (offer / answer / ICE) is stored in the database and polled by
+// both clients, so calls work without a separate WebSocket server.
+// ---------------------------------------------------------------------------
+
+model Call {
+  id             String    @id @default(cuid())
+  conversationId String?
+  callerId       String
+  caller         User      @relation("CallCaller", fields: [callerId], references: [id], onDelete: Cascade)
+  calleeId       String
+  callee         User      @relation("CallCallee", fields: [calleeId], references: [id], onDelete: Cascade)
+  // "video" | "audio"
+  kind           String    @default("video")
+  // "ringing" | "active" | "declined" | "missed" | "ended"
+  status         String    @default("ringing")
+  startedAt      DateTime?
+  endedAt        DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  signals   CallSignal[]
+  reactions CallReaction[]
+
+  @@index([calleeId, status])
+  @@index([callerId, status])
+  @@index([conversationId])
+}
+
+model CallSignal {
+  id        String   @id @default(cuid())
+  callId    String
+  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  senderId  String
+  // "offer" | "answer" | "ice"
+  type      String
+  payload   String // JSON string
+  createdAt DateTime @default(now())
+
+  @@index([callId, createdAt])
+}
+
+model CallReaction {
+  id        String   @id @default(cuid())
+  callId    String
+  call      Call     @relation(fields: [callId], references: [id], onDelete: Cascade)
+  userId    String
+  emoji     String
+  createdAt DateTime @default(now())
+
+  @@index([callId, createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Admin-managed GIFs (shown at the top of the GIF picker for all users)
+// ---------------------------------------------------------------------------
+
+model AdminGif {
+  id          String   @id @default(cuid())
+  url         String
+  title       String   @default("")
+  createdAt   DateTime @default(now())
+  createdById String?
+
+  @@index([createdAt])
+}

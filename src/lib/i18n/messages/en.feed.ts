@@ -1,0 +1,220 @@
+/** English translations for the feed / posts / stories / reels area. */
+const messages: Record<string, string> = {
+  /* Post card & detail */
+  "{count} ko'rish": "{count} views",
+  "{count} ta izohni ko'rish": "View all {count} comments",
+  "{count} ta yoqdi": "{count} likes",
+  "{n}-media": "Media {n}",
+  Batafsil: "Details",
+  "Boshqa amallar": "More options",
+  "Havola nusxalandi": "Link copied",
+  "Havolani nusxalash": "Copy link",
+  Izohlar: "Comments",
+  Next: "Next",
+  Previous: "Previous",
+  "Olib tashlandi": "Removed",
+  "Post o'chirildi": "Post deleted",
+  Saqlandi: "Saved",
+  "Shikoyat qilish": "Report",
+  tahrirlangan: "edited",
+  Ulashish: "Share",
+  Video: "Video",
+  Yoqdi: "Like",
+  like: "Like",
+  save: "Save",
+  share: "Share",
+  more: "More",
+
+  /* Likes dialog */
+  Yoqtirganlar: "Likes",
+  "Hozircha hech kim yoqtirmagan": "No likes yet",
+
+  /* Post grid */
+  "Hozircha post yo'q": "No posts yet",
+
+  /* Report dialog */
+  "Nima uchun shikoyat qilmoqchisiz?": "Why do you want to report this?",
+  "Shikoyat yuborildi. Rahmat!": "Report submitted. Thank you!",
+  "Shikoyat yuborish": "Submit report",
+  "Spam yoki chalg'ituvchi kontent": "Spam or misleading content",
+  "Bezorilik yoki nafrat": "Harassment or hate",
+  "Nomaqbul kontent": "Inappropriate content",
+  "Yolg'on ma'lumot": "False information",
+  "Mualliflik huquqi buzilishi": "Copyright infringement",
+
+  /* Edit post dialog */
+  "Postni tahrirlash": "Edit post",
+  "Post yangilandi": "Post updated",
+  "Izoh...": "Caption...",
+  Joylashuv: "Location",
+
+  /* Comments */
+  "Izoh qoldiring...": "Add a comment...",
+  Joylash: "Post",
+  "Hozircha izoh yo'q. Birinchi bo'ling!": "No comments yet. Be the first!",
+  "Premium berishda xatolik": "Failed to grant Premium",
+  "Premium sovg'a qilindi 🎉": "Premium gifted 🎉",
+  "Sizga obuna bo'lgan foydalanuvchiga premium sovg'a qilish":
+    "Gift Premium to a user who follows you",
+  "Premium berish": "Gift Premium",
+  "Izohni yoqtirish": "Like comment",
+
+  /* Reels */
+  "Hozircha Reels yo'q": "No Reels yet",
+  "Post yaratishda «Reel»ni tanlab birinchi reelni joylang.":
+    "Choose \u201cReel\u201d when creating a post to publish your first reel.",
+  "Media mavjud emas": "Media unavailable",
+  "Ovozni yoqish": "Unmute",
+  "Ovozni o'chirish": "Mute",
+  "Original audio · {username}": "Original audio · {username}",
+
+  /* Stories */
+  "Hikoya qo'shish": "Add story",
+  Hikoyam: "My story",
+  Siz: "You",
+  "Hali hech kim hikoya qo'ymagan": "No one has posted a story yet",
+  "Atrofdagi odamlarni kuzating →": "Follow people around you →",
+  "Yuklab bo'lmadi": "Upload failed",
+  "Musiqa qo'shildi": "Music added",
+  "Hikoya joylandi": "Story published",
+  "Joylab bo'lmadi": "Failed to publish",
+  "Matnni shu yerga yozing...": "Type your text here...",
+  "Foto yoki video tanlang": "Choose a photo or video",
+  "Keyin ustiga emoji, GIF, matn va musiqa qo'shasiz":
+    "Then add emoji, GIF, text and music on top",
+  Media: "Media",
+  Matn: "Text",
+  Stiker: "Sticker",
+  Stikerlar: "Stickers",
+  Musiqa: "Music",
+  "Barchasini tozalash": "Clear all",
+  "Mediani almashtirish": "Change media",
+  Hajm: "Size",
+  Nusxalash: "Copy",
+  "GIF havolasi (https://...)": "GIF link (https://...)",
+  "To'g'ri havola kiriting": "Enter a valid link",
+  "Qo'shish": "Add",
+  "Matn yozing...": "Type text...",
+  Rang: "Color",
+  "Matn kiriting": "Enter text",
+  "Matn qo'shish": "Add text",
+  "Musiqa nomi": "Music title",
+  "Audio havolasi (https://...)": "Audio link (https://...)",
+  "Musiqa tanlandi": "Music selected",
+  "Qurilmadan audio yuklash": "Upload audio from device",
+  "Musiqani olib tashlash": "Remove music",
+  "Qandaydir fikr yozing...": "Write something...",
+  Fon: "Background",
+
+  /* Story viewer */
+  "Izoh yuborilmadi": "Comment not sent",
+  "Bosib turing — pauza": "Hold to pause",
+  "{count} ko'rganlar": "{count} viewers",
+  "{count} izoh": "{count} comments",
+  "Reaksiya va izohlar faqat sizga ko'rinadi":
+    "Reactions and comments are visible only to you",
+  "Reaksiya {emoji}": "Reaction {emoji}",
+  "Izoh yozing...": "Write a comment...",
+  Oldingi: "Previous",
+  Keyingi: "Next",
+  "Ko'rganlar": "Viewers",
+  Reaksiyalar: "Reactions",
+  "Hikoya statistikasi": "Story statistics",
+  "Ma'lumot yo'q": "No data",
+  "Hozircha hech kim ko'rmagan": "No viewers yet",
+  "Hozircha reaksiya yo'q": "No reactions yet",
+  "Hozircha izoh yo'q": "No comments yet",
+  "{count} ta reaksiya": "{count} reactions",
+
+  /* Profile, followers & explore */
+  Kuzatuvchilar: "Followers",
+  "Hozircha kuzatuvchi yo'q": "No followers yet",
+  "Hozircha kuzatilayotgan hisob yo'q": "Not following anyone yet",
+  "Bu hashtag bo'yicha post yo'q": "No posts for this hashtag",
+  "{count} ta post": "{count} posts",
+  "Odamlarni kashf etish": "Discover people",
+  "Bu hisob yopiq": "This account is private",
+  "Kuzatish so'rovingiz yuborilgan. Tasdiqlanishini kuting.":
+    "Your follow request has been sent. Wait for approval.",
+  "Postlarni ko'rish uchun bu hisobga obuna bo'ling.":
+    "Follow this account to see their posts.",
+  "Bu yerda hali post yo'q. Odamlarni kuzatib boshlang yoki o'z birinchi postingizni joylang.":
+    "There are no posts yet. Start following people, or share your first post.",
+
+  /* Create & media editor */
+  Filtrlar: "Filters",
+  Effektlar: "Effects",
+  "Joylandi!": "Posted!",
+  "Yangi post yaratish": "Create new post",
+  "Rasm yoki video tashlang": "Drop a photo or video",
+  "Fayllarni bu yerga sudrab tashlang yoki tanlang. So'ngra emoji, stiker, GIF va effektlar qo'shishingiz mumkin.":
+    "Drag files here or select them. Then you can add emoji, stickers, GIFs and effects.",
+  "Media tanlash": "Select media",
+  "Yangi reel": "New reel",
+  "Yangi post": "New post",
+  "Yuklanmoqda...": "Uploading...",
+  "Yana qo'shish": "Add more",
+  "Joylashuv qo'shish": "Add location",
+  "Reel sifatida joylash": "Post as Reel",
+  "Tahrirlash maslahati": "Editing tip",
+  "Elementni bosing va suring. Hajmini, burilishini va harakatini o'zgartiring. Video uchun filtr, tezlik va kesish ham mavjud.":
+    "Tap and drag an element. Change its size, rotation and motion. For video, filters, speed and trimming are also available.",
+  "Media qo'shish": "Add media",
+  "Qo'shildi": "Added",
+  "Tayyor GIFlar": "Ready GIFs",
+  "Qurilmadan yuklash": "Upload from device",
+  Tezlik: "Speed",
+  "Kesish · {start}s – {end}s": "Trim · {start}s – {end}s",
+  Boshlanish: "Start",
+  Tugash: "End",
+  Ovoz: "Sound",
+  Ovozsiz: "Muted",
+  "Ovoz bilan": "With sound",
+  "Tanlangan element harakati": "Selected element animation",
+  Effekt: "Effect",
+  Yuklash: "Upload",
+  Burish: "Rotate",
+
+  /* Emoji groups */
+  Kulgi: "Smileys",
+  Ishoralar: "Gestures",
+  Sevgi: "Love",
+  Hayvonlar: "Animals",
+  Taom: "Food",
+  Faoliyat: "Activity",
+  Belgilar: "Symbols",
+
+  /* Sticker packs & GIFs */
+  Yulduzlar: "Stars",
+  Olov: "Fire",
+  Party: "Party",
+  Tabiat: "Nature",
+  Kayfiyat: "Mood",
+  Qarsak: "Applause",
+  Voy: "Wow",
+  Raqs: "Dance",
+  Yulduz: "Star",
+  "Yomg'ir": "Rain",
+  Yurak: "Heart",
+  Toj: "Crown",
+  Mushuk: "Cat",
+
+  /* Filters */
+  Asl: "Original",
+  Yorqin: "Vivid",
+  Issiq: "Warm",
+  Salqin: "Cool",
+  "Oq-qora": "Black & white",
+  Orzu: "Dream",
+  Quyosh: "Sunset",
+  Kino: "Cinema",
+
+  /* Overlay animations */
+  "Yo'q": "None",
+  Suzish: "Float",
+  Puls: "Pulse",
+  Aylanish: "Spin",
+  Sakrash: "Bounce",
+};
+
+export default messages;

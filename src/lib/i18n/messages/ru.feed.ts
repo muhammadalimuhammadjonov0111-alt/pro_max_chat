@@ -1,0 +1,220 @@
+/** Russian translations for the feed / posts / stories / reels area. */
+const messages: Record<string, string> = {
+  /* Post card & detail */
+  "{count} ko'rish": "{count} просмотров",
+  "{count} ta izohni ko'rish": "Смотреть все комментарии ({count})",
+  "{count} ta yoqdi": "{count} отметок «Нравится»",
+  "{n}-media": "Медиа {n}",
+  Batafsil: "Подробнее",
+  "Boshqa amallar": "Другие действия",
+  "Havola nusxalandi": "Ссылка скопирована",
+  "Havolani nusxalash": "Копировать ссылку",
+  Izohlar: "Комментарии",
+  Next: "Далее",
+  Previous: "Назад",
+  "Olib tashlandi": "Удалено",
+  "Post o'chirildi": "Пост удалён",
+  Saqlandi: "Сохранено",
+  "Shikoyat qilish": "Пожаловаться",
+  tahrirlangan: "изменено",
+  Ulashish: "Поделиться",
+  Video: "Видео",
+  Yoqdi: "Нравится",
+  like: "Нравится",
+  save: "Сохранить",
+  share: "Поделиться",
+  more: "Ещё",
+
+  /* Likes dialog */
+  Yoqtirganlar: "Отметки «Нравится»",
+  "Hozircha hech kim yoqtirmagan": "Пока никто не отметил",
+
+  /* Post grid */
+  "Hozircha post yo'q": "Пока нет постов",
+
+  /* Report dialog */
+  "Nima uchun shikoyat qilmoqchisiz?": "Почему вы хотите пожаловаться?",
+  "Shikoyat yuborildi. Rahmat!": "Жалоба отправлена. Спасибо!",
+  "Shikoyat yuborish": "Отправить жалобу",
+  "Spam yoki chalg'ituvchi kontent": "Спам или вводящий в заблуждение контент",
+  "Bezorilik yoki nafrat": "Травля или ненависть",
+  "Nomaqbul kontent": "Неприемлемый контент",
+  "Yolg'on ma'lumot": "Ложная информация",
+  "Mualliflik huquqi buzilishi": "Нарушение авторских прав",
+
+  /* Edit post dialog */
+  "Postni tahrirlash": "Редактировать пост",
+  "Post yangilandi": "Пост обновлён",
+  "Izoh...": "Подпись...",
+  Joylashuv: "Местоположение",
+
+  /* Comments */
+  "Izoh qoldiring...": "Оставьте комментарий...",
+  Joylash: "Опубликовать",
+  "Hozircha izoh yo'q. Birinchi bo'ling!": "Пока нет комментариев. Будьте первым!",
+  "Premium berishda xatolik": "Ошибка при выдаче Premium",
+  "Premium sovg'a qilindi 🎉": "Premium подарен 🎉",
+  "Sizga obuna bo'lgan foydalanuvchiga premium sovg'a qilish":
+    "Подарить Premium пользователю, который на вас подписан",
+  "Premium berish": "Подарить Premium",
+  "Izohni yoqtirish": "Нравится комментарий",
+
+  /* Reels */
+  "Hozircha Reels yo'q": "Пока нет Reels",
+  "Post yaratishda «Reel»ni tanlab birinchi reelni joylang.":
+    "Выберите «Reel» при создании поста, чтобы опубликовать первый рилс.",
+  "Media mavjud emas": "Медиа недоступно",
+  "Ovozni yoqish": "Включить звук",
+  "Ovozni o'chirish": "Выключить звук",
+  "Original audio · {username}": "Оригинальный звук · {username}",
+
+  /* Stories */
+  "Hikoya qo'shish": "Добавить историю",
+  Hikoyam: "Моя история",
+  Siz: "Вы",
+  "Hali hech kim hikoya qo'ymagan": "Пока никто не добавил историю",
+  "Atrofdagi odamlarni kuzating →": "Подпишитесь на людей вокруг →",
+  "Yuklab bo'lmadi": "Не удалось загрузить",
+  "Musiqa qo'shildi": "Музыка добавлена",
+  "Hikoya joylandi": "История опубликована",
+  "Joylab bo'lmadi": "Не удалось опубликовать",
+  "Matnni shu yerga yozing...": "Напишите текст здесь...",
+  "Foto yoki video tanlang": "Выберите фото или видео",
+  "Keyin ustiga emoji, GIF, matn va musiqa qo'shasiz":
+    "Затем добавьте эмодзи, GIF, текст и музыку",
+  Media: "Медиа",
+  Matn: "Текст",
+  Stiker: "Стикер",
+  Stikerlar: "Стикеры",
+  Musiqa: "Музыка",
+  "Barchasini tozalash": "Очистить всё",
+  "Mediani almashtirish": "Заменить медиа",
+  Hajm: "Размер",
+  Nusxalash: "Копировать",
+  "GIF havolasi (https://...)": "Ссылка на GIF (https://...)",
+  "To'g'ri havola kiriting": "Введите корректную ссылку",
+  "Qo'shish": "Добавить",
+  "Matn yozing...": "Введите текст...",
+  Rang: "Цвет",
+  "Matn kiriting": "Введите текст",
+  "Matn qo'shish": "Добавить текст",
+  "Musiqa nomi": "Название музыки",
+  "Audio havolasi (https://...)": "Ссылка на аудио (https://...)",
+  "Musiqa tanlandi": "Музыка выбрана",
+  "Qurilmadan audio yuklash": "Загрузить аудио с устройства",
+  "Musiqani olib tashlash": "Убрать музыку",
+  "Qandaydir fikr yozing...": "Напишите что-нибудь...",
+  Fon: "Фон",
+
+  /* Story viewer */
+  "Izoh yuborilmadi": "Комментарий не отправлен",
+  "Bosib turing — pauza": "Удерживайте — пауза",
+  "{count} ko'rganlar": "{count} просмотров",
+  "{count} izoh": "{count} комментариев",
+  "Reaksiya va izohlar faqat sizga ko'rinadi":
+    "Реакции и комментарии видны только вам",
+  "Reaksiya {emoji}": "Реакция {emoji}",
+  "Izoh yozing...": "Напишите комментарий...",
+  Oldingi: "Предыдущее",
+  Keyingi: "Следующее",
+  "Ko'rganlar": "Просмотры",
+  Reaksiyalar: "Реакции",
+  "Hikoya statistikasi": "Статистика истории",
+  "Ma'lumot yo'q": "Нет данных",
+  "Hozircha hech kim ko'rmagan": "Пока никто не смотрел",
+  "Hozircha reaksiya yo'q": "Пока нет реакций",
+  "Hozircha izoh yo'q": "Пока нет комментариев",
+  "{count} ta reaksiya": "{count} реакций",
+
+  /* Profile, followers & explore */
+  Kuzatuvchilar: "Подписчики",
+  "Hozircha kuzatuvchi yo'q": "Пока нет подписчиков",
+  "Hozircha kuzatilayotgan hisob yo'q": "Пока нет подписок",
+  "Bu hashtag bo'yicha post yo'q": "Нет постов по этому хэштегу",
+  "{count} ta post": "{count} постов",
+  "Odamlarni kashf etish": "Найти людей",
+  "Bu hisob yopiq": "Этот аккаунт закрыт",
+  "Kuzatish so'rovingiz yuborilgan. Tasdiqlanishini kuting.":
+    "Запрос на подписку отправлен. Ожидайте подтверждения.",
+  "Postlarni ko'rish uchun bu hisobga obuna bo'ling.":
+    "Подпишитесь на этот аккаунт, чтобы видеть посты.",
+  "Bu yerda hali post yo'q. Odamlarni kuzatib boshlang yoki o'z birinchi postingizni joylang.":
+    "Здесь пока нет постов. Начните подписываться на людей или опубликуйте свой первый пост.",
+
+  /* Create & media editor */
+  Filtrlar: "Фильтры",
+  Effektlar: "Эффекты",
+  "Joylandi!": "Опубликовано!",
+  "Yangi post yaratish": "Создать новый пост",
+  "Rasm yoki video tashlang": "Перетащите фото или видео",
+  "Fayllarni bu yerga sudrab tashlang yoki tanlang. So'ngra emoji, stiker, GIF va effektlar qo'shishingiz mumkin.":
+    "Перетащите файлы сюда или выберите их. Затем можно добавить эмодзи, стикеры, GIF и эффекты.",
+  "Media tanlash": "Выбрать медиа",
+  "Yangi reel": "Новый рилс",
+  "Yangi post": "Новый пост",
+  "Yuklanmoqda...": "Загрузка...",
+  "Yana qo'shish": "Добавить ещё",
+  "Joylashuv qo'shish": "Добавить местоположение",
+  "Reel sifatida joylash": "Опубликовать как Reels",
+  "Tahrirlash maslahati": "Совет по редактированию",
+  "Elementni bosing va suring. Hajmini, burilishini va harakatini o'zgartiring. Video uchun filtr, tezlik va kesish ham mavjud.":
+    "Нажмите и перетащите элемент. Изменяйте его размер, поворот и движение. Для видео также доступны фильтры, скорость и обрезка.",
+  "Media qo'shish": "Добавить медиа",
+  "Qo'shildi": "Добавлено",
+  "Tayyor GIFlar": "Готовые GIF",
+  "Qurilmadan yuklash": "Загрузить с устройства",
+  Tezlik: "Скорость",
+  "Kesish · {start}s – {end}s": "Обрезка · {start}с – {end}с",
+  Boshlanish: "Начало",
+  Tugash: "Конец",
+  Ovoz: "Звук",
+  Ovozsiz: "Без звука",
+  "Ovoz bilan": "Со звуком",
+  "Tanlangan element harakati": "Анимация выбранного элемента",
+  Effekt: "Эффект",
+  Yuklash: "Загрузить",
+  Burish: "Поворот",
+
+  /* Emoji groups */
+  Kulgi: "Смайлы",
+  Ishoralar: "Жесты",
+  Sevgi: "Любовь",
+  Hayvonlar: "Животные",
+  Taom: "Еда",
+  Faoliyat: "Активность",
+  Belgilar: "Символы",
+
+  /* Sticker packs & GIFs */
+  Yulduzlar: "Звёзды",
+  Olov: "Огонь",
+  Party: "Вечеринка",
+  Tabiat: "Природа",
+  Kayfiyat: "Настроение",
+  Qarsak: "Аплодисменты",
+  Voy: "Вау",
+  Raqs: "Танец",
+  Yulduz: "Звезда",
+  "Yomg'ir": "Дождь",
+  Yurak: "Сердце",
+  Toj: "Корона",
+  Mushuk: "Кот",
+
+  /* Filters */
+  Asl: "Оригинал",
+  Yorqin: "Яркий",
+  Issiq: "Тёплый",
+  Salqin: "Холодный",
+  "Oq-qora": "Чёрно-белый",
+  Orzu: "Мечта",
+  Quyosh: "Закат",
+  Kino: "Кино",
+
+  /* Overlay animations */
+  "Yo'q": "Нет",
+  Suzish: "Плавание",
+  Puls: "Пульс",
+  Aylanish: "Вращение",
+  Sakrash: "Прыжок",
+};
+
+export default messages;

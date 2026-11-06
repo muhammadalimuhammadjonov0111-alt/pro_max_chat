@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chek</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#050a10;display:flex;justify-content:center;padding:20px 12px;min-height:100vh;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .receipt{width:100%;max-width:384px;background:#0d1117;color:#c9d1d9;border:1px solid #21262d;border-radius:16px;padding:20px;box-shadow:0 25px 50px -12px rgba(0,0,0,.5)}
+  .header{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#8b949e;border-bottom:1px solid #21262d;padding-bottom:12px;margin-bottom:16px}
+  .header-brand{letter-spacing:.15em}
+  .sum-card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;margin-bottom:16px;text-align:center}
+  .sum-label{font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+  .sum-value{font-size:30px;font-weight:800;color:#ff7b72;letter-spacing:-.02em;line-height:1.2}
+  .meta{font-size:12px}
+  .meta-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #21262d}
+  .meta-row:last-child{border-bottom:none}
+  .meta-k{color:#8b949e}
+  .meta-v{color:#fff;text-align:right}
+  .meta-v.blue{color:#58a6ff;font-weight:500}
+  .footer{text-align:center;padding-top:20px;margin-top:4px;border-top:1px solid #21262d}
+  .barcode{height:36px;width:190px;margin:0 auto;background:repeating-linear-gradient(to right,#e6edf3 0 2px,transparent 2px 4px,#e6edf3 4px 5px,transparent 5px 9px,#e6edf3 9px 11px,transparent 11px 13px,#e6edf3 13px 14px,transparent 14px 18px,#e6edf3 18px 20px,transparent 20px 22px)}
+  .barcode-num{font-size:11px;letter-spacing:.25em;color:#8b949e;margin-top:8px}
+  .footer-note{font-size:10px;line-height:1.6;color:#8b949e;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="receipt">
+  <div class="header">
+    <span class="header-brand">* GIDGRAM SYSTEMS *</span>
+    <span>#GG-948102</span>
+  </div>
+  <div class="sum-card">
+    <div class="sum-label">Yakuniy to'lov miqdori</div>
+    <div class="sum-value">100 000 UZS</div>
+  </div>
+  <div class="meta">
+    <div class="meta-row"><span class="meta-k">Mijoz</span><span class="meta-v">Muhammad (@user)</span></div>
+    <div class="meta-row"><span class="meta-k">Telegram ID</span><span class="meta-v">582910382</span></div>
+    <div class="meta-row"><span class="meta-k">Tarif</span><span class="meta-v">Gidgram Premium</span></div>
+    <div class="meta-row"><span class="meta-k">To'lov usuli</span><span class="meta-v blue">CLICK / PAYME</span></div>
+    <div class="meta-row"><span class="meta-k">Sana va vaqt</span><span class="meta-v">06.11.2026 | 10:25</span></div>
+  </div>
+  <div class="footer">
+    <div class="barcode"></div>
+    <div class="barcode-num">8 948102 06112026</div>
+    <p class="footer-note">Raqamli billing tizimi tomonidan tasdiqlangan<br/>Elektron imzo bilan tasdiqlangan hujjat</p>
+  </div>
+</div>
+</body>
+</html>
